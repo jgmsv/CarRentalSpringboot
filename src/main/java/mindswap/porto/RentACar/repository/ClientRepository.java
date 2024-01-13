@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByNif (Integer nif);
+    Optional<Client> findByEmail (String email);
+    Optional<Client> findByLicence (String licence);
 }

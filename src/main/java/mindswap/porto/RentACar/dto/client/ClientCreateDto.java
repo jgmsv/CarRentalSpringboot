@@ -1,17 +1,15 @@
-package mindswap.porto.RentACar.dto;
+package mindswap.porto.RentACar.dto.client;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import mindswap.porto.RentACar.model.Rental;
 import mindswap.porto.RentACar.util.Messages;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.*;
+
 import java.util.List;
 
 
 public record ClientCreateDto(
-        List<Rental> rentals,
         @NotNull(message = Messages.EMPTYNAME)
         String name,
         @Column(unique = true)
@@ -21,6 +19,9 @@ public record ClientCreateDto(
         Integer nif,
         @NotNull()
         @Size(min = 9, max = 9, message = Messages.NINECHAR)
-        String licence){
-
+        String licence,
+        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = Messages.INVALIDEMAIL)
+        String email
+        )
+{
 }

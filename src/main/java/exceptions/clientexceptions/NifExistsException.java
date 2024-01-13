@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.clientexceptions;
 
 public class NifExistsException extends Exception{
     public NifExistsException(String message){

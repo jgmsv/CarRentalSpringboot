@@ -1,10 +1,10 @@
 package mindswap.porto.RentACar.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import mindswap.porto.RentACar.util.GearType;
+import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table

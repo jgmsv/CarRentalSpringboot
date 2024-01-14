@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static mindswap.porto.RentACar.converter.ClientConverter.fromClientModelListToGetDtoList;
-import static mindswap.porto.RentACar.converter.ClientConverter.fromModelToCreateDto;
+import static mindswap.porto.RentACar.converter.ClientConverter.ClientDbToDtoList;
+import static mindswap.porto.RentACar.converter.ClientConverter.dtoToClientDb;
 
 @Service
 public class ClientService implements ClientServiceI {
@@ -38,13 +38,13 @@ public class ClientService implements ClientServiceI {
         if (clientRepository.findByLicence(client.licence()).isPresent()) {
             throw new LicenceException(Messages.LICENCEEXISTS);
         }
-        clientRepository.save(fromModelToCreateDto(client));
+        clientRepository.save(dtoToClientDb(client));
     }
 
 
     @Override
     public List<ClientGetDto> getAll() {
-        return fromClientModelListToGetDtoList(clientRepository.findAll());
+        return ClientDbToDtoList(clientRepository.findAll());
     }
 
     @Override

@@ -24,7 +24,10 @@ public record ClientCreateDto(
         @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = Messages.INVALIDEMAIL)
         String email,
         @Past
-        LocalDate birthDate
+        LocalDate birthDate,
+        @Size(min = 8)
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")
+        String password
         )
 {
 }

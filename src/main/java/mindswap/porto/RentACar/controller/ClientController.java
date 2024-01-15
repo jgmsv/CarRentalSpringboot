@@ -51,7 +51,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         clientService.put(id, client);
-        return new ResponseEntity<>(Messages.CLIENTUPDATED, HttpStatus.OK);
+        return new ResponseEntity<>(Messages.CARUPDATED, HttpStatus.OK);
     }
 }
 

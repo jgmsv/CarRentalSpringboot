@@ -18,5 +18,5 @@ public interface CarServiceI {
 
     List<CarGetDto> getAll();
 
-    void put(long id, CarUpdateDto client) throws CarNotFoundException, LicencePlateException;
+    void put(long id, CarUpdateDto client) throws CarNotFoundException, LicencePlateException, ClientNotFoundException;
 }

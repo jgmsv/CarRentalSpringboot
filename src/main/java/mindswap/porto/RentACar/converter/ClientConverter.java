@@ -10,7 +10,7 @@ public class ClientConverter {
 
 
 
-    public static Client dtoToClientDb(ClientCreateDto client){
+    public static Client dtoToClient(ClientCreateDto client){
         return Client.builder()
                 .name(client.name())
                 .nif(client.nif())
@@ -21,18 +21,17 @@ public class ClientConverter {
                 .build();
     }
 
-    public static ClientGetDto fromModeltoGetDto(Client client){
-        return ClientGetDto.builder()
-                .name(client.getName())
-                .nif(client.getNif())
-                .email(client.getEmail())
-                .build();
-
+    public static ClientGetDto clientToDto(Client client) {
+        return new ClientGetDto(
+                client.getName(),
+                client.getEmail(),
+                client.getNif()
+        );
     }
 
-    public static List<ClientGetDto> ClientDbToDtoList(List<Client> clients) {
+    public static List<ClientGetDto> ClientToDtoList(List<Client> clients) {
         return clients.stream()
-                .map(ClientConverter::fromModeltoGetDto)
+                .map(ClientConverter::clientToDto)
                 .toList();
     }
 

@@ -50,7 +50,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        clientService.putParcial(id, client);
+        clientService.put(id, client);
         return new ResponseEntity<>(Messages.CLIENTUPDATED, HttpStatus.OK);
     }
 }

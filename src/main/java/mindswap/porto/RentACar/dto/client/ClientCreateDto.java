@@ -2,12 +2,10 @@ package mindswap.porto.RentACar.dto.client;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
-import mindswap.porto.RentACar.model.Rental;
 import mindswap.porto.RentACar.util.Messages;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 public record ClientCreateDto(

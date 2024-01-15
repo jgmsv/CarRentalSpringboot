@@ -13,4 +13,5 @@ public class Messages {
     public static final Object CLIENTUPDATED = "Client updated";
     public static final String INVALIDNIF = "Invalid nif";
     public static final String INVALIDEMAIL = "Invalid email";
+    public static final String INVALIDPLATE = "Invalid licence plate";
 }

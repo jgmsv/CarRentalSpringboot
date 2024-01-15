@@ -48,7 +48,7 @@ public class ClientService implements ClientServiceI {
     }
 
     @Override
-    public void putParcial(long id, ClientUpdateDto client) throws EmailException, ClientNotFoundException {
+    public void put(long id, ClientUpdateDto client) throws EmailException, ClientNotFoundException {
         Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(String.format(Messages.CLIENTIDDONTEXISTS, id)));
         if (client.name() != null && !client.name().isEmpty() && !client.name().equals(clientToUpdate.getName())) {
             clientToUpdate.setName(client.name());

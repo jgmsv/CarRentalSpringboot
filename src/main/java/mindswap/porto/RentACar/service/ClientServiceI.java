@@ -1,6 +1,7 @@
 package mindswap.porto.RentACar.service;
 
 import exceptions.clientexceptions.*;
+import mindswap.porto.RentACar.dto.car.CarCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientGetDto;
 import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
@@ -13,7 +14,7 @@ public interface ClientServiceI {
 
     List<ClientGetDto> getAll();
 
-    void putParcial(long id, ClientUpdateDto client) throws ClientNotFoundException, NifException, EmailException;
+    void put(long id, ClientUpdateDto client) throws ClientNotFoundException, NifException, EmailException;
 
 
 

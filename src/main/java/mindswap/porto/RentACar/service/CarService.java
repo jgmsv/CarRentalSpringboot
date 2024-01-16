@@ -1,13 +1,10 @@
 package mindswap.porto.RentACar.service;
 
-import exceptions.carexceptions.CarAlreadyExists;
-import exceptions.carexceptions.CarNotFoundException;
-import exceptions.carexceptions.LicencePlateException;
-import exceptions.clientexceptions.ClientNotFoundException;
-import mindswap.porto.RentACar.converter.CarConverter;
-import mindswap.porto.RentACar.dto.car.CarCreateDto;
-import mindswap.porto.RentACar.dto.car.CarGetDto;
-import mindswap.porto.RentACar.dto.car.CarUpdateDto;
+import mindswap.porto.RentACar.dto.car.*;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarAlreadyExists;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
+import mindswap.porto.RentACar.exceptions.carexceptions.LicencePlateException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
 import mindswap.porto.RentACar.model.Car;
 import mindswap.porto.RentACar.model.Client;
 import mindswap.porto.RentACar.repository.CarRepository;
@@ -42,7 +39,22 @@ public class CarService implements CarServiceI{
 
     @Override
     public void put(long id, CarUpdateDto client) throws CarNotFoundException{
-        Car carToUpdate = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(String.format(Messages.CARDONTEXISTS, id)));
+        Car carToUpdate = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(String.format(Messages.CARIDDOESNTEXIXTS, id)));
         carRepository.save(carToUpdate);
+    }
+
+    @Override
+    public Car findByID(long id) throws CarNotFoundException {
+        return carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(String.format(Messages.CARIDDOESNTEXIXTS, id)));
+    }
+
+    @Override
+    public void updateAvailability(Long id, AvailabilityDto availabilityDto) throws CarNotFoundException {
+
+    }
+
+    @Override
+    public void updateprice(Long id, UpdatePriceDto updatePriceDto) throws CarNotFoundException {
+
     }
 }

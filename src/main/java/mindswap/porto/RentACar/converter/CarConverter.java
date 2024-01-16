@@ -17,7 +17,7 @@ public class CarConverter  {
                 .carType(dto.carType())
                 .licencePlate(dto.licencePlate())
                 .available(dto.available())
-                .pricePerHour(dto.pricePerHour())
+                .pricePerDay(dto.pricePerDay())
                 .build();
     }
 
@@ -29,7 +29,7 @@ public class CarConverter  {
                 car.getGear(),
                 car.getCarType(),
                 car.isAvailable(),
-                car.getPricePerHour()
+                car.getPricePerDay()
         );
     }
 

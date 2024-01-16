@@ -2,8 +2,6 @@ package mindswap.porto.RentACar.dto.car;
 
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 import mindswap.porto.RentACar.util.GearType;
 import mindswap.porto.RentACar.util.Messages;
 
@@ -23,9 +21,10 @@ public record CarCreateDto(
         @Pattern(regexp = "(^(?:[A-Z]{2}-\\d{2}-\\d{2})|(?:\\d{2}-[A-Z]{2}-\\d{2})|(?:\\d{2}-\\d{2}-[A-Z]{2})|(?:[A-Z]{2}-\\d{2}-[A-Z]{2})$)", message = Messages.INVALIDPLATE)
         String licencePlate,
         @NotNull
-        boolean available,
+
+        boolean available ,
         @NotNull
-        double pricePerHour
+        double pricePerDay
 ) {
 
 

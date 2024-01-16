@@ -17,9 +17,10 @@ public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "rental")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "car_id")
     private Car car;
-    @ManyToOne()
+    @ManyToOne(optional = false)
     @JoinColumn(name="client_id")
     private Client client;
     private LocalDate rentalDate;

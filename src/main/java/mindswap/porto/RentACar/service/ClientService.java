@@ -1,9 +1,12 @@
 package mindswap.porto.RentACar.service;
 
-import exceptions.clientexceptions.*;
 import mindswap.porto.RentACar.dto.client.ClientCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientGetDto;
 import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
+import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.EmailException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.NifException;
 import mindswap.porto.RentACar.model.Client;
 import mindswap.porto.RentACar.repository.ClientRepository;
 import mindswap.porto.RentACar.util.Messages;
@@ -49,7 +52,7 @@ public class ClientService implements ClientServiceI {
 
     @Override
     public void put(long id, ClientUpdateDto client) throws EmailException, ClientNotFoundException {
-        Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(String.format(Messages.CLIENTIDDONTEXISTS, id)));
+        Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(String.format(Messages.CLIENTIDDOESNTEXISTS, id)));
         if (client.name() != null && !client.name().isEmpty() && !client.name().equals(clientToUpdate.getName())) {
             clientToUpdate.setName(client.name());
         }
@@ -62,7 +65,11 @@ public class ClientService implements ClientServiceI {
         }
     }
 
+    @Override
+    public Client findByid(long id) throws ClientNotFoundException {
+        return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(String.format(Messages.CLIENTIDDOESNTEXISTS, id)));
 
+    }
 
 
 }

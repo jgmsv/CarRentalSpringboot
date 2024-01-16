@@ -2,10 +2,8 @@ package mindswap.porto.RentACar.dto.car;
 
 import jakarta.validation.constraints.NotNull;
 
-public record CarUpdateDto (
+public record AvailabilityDto(
         @NotNull
-        boolean available,
-        @NotNull
-        double pricePerDay
-){
+        boolean available
+) {
 }

@@ -5,7 +5,9 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -19,8 +21,8 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "client")
-    private List<Rental> rentals;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<Rental> clientRentals = new HashSet<>();
     private String name;
     @Column(unique = true)
     private Integer nif;

@@ -1,27 +1,18 @@
 package mindswap.porto.RentACar.controller;
 
-import exceptions.carexceptions.CarAlreadyExists;
-import exceptions.carexceptions.CarNotFoundException;
-import exceptions.carexceptions.LicencePlateException;
-import exceptions.clientexceptions.ClientNotFoundException;
-import exceptions.clientexceptions.EmailException;
-import exceptions.clientexceptions.LicenceException;
-import exceptions.clientexceptions.NifException;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarAlreadyExists;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
+import mindswap.porto.RentACar.exceptions.carexceptions.LicencePlateException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
 import jakarta.validation.Valid;
-import mindswap.porto.RentACar.converter.CarConverter;
 import mindswap.porto.RentACar.dto.car.CarCreateDto;
 import mindswap.porto.RentACar.dto.car.CarGetDto;
 import mindswap.porto.RentACar.dto.car.CarUpdateDto;
-import mindswap.porto.RentACar.dto.client.ClientCreateDto;
-import mindswap.porto.RentACar.dto.client.ClientGetDto;
-import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
 import mindswap.porto.RentACar.service.CarService;
-import mindswap.porto.RentACar.service.ClientService;
 import mindswap.porto.RentACar.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,10 +1,13 @@
 package mindswap.porto.RentACar.controller;
 
-import exceptions.clientexceptions.*;
 import jakarta.validation.Valid;
 import mindswap.porto.RentACar.dto.client.ClientCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientGetDto;
 import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
+import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.EmailException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.NifException;
 import mindswap.porto.RentACar.service.ClientService;
 import mindswap.porto.RentACar.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,7 @@ public class ClientController {
 
 
     @PutMapping(path = "{clientId}")
-    public ResponseEntity<Object> PutParcial(@PathVariable("clientId") Long id, @RequestBody ClientUpdateDto client, BindingResult bindingResult) throws ClientNotFoundException, EmailException {
+    public ResponseEntity<Object> Put(@PathVariable("clientId") Long id, @RequestBody ClientUpdateDto client, BindingResult bindingResult) throws ClientNotFoundException, EmailException {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

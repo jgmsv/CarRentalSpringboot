@@ -14,6 +14,6 @@ public record CarGetDto(
         GearType gear,
         String carType,
         boolean available,
-        double pricePerHour
+        double pricePerDay
 ) {
 }

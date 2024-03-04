@@ -2,13 +2,14 @@ package mindswap.porto.RentACar.model;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mindswap.porto.RentACar.util.GearType;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -28,10 +29,8 @@ public class Car {
     @Column(unique = true)
     private String licencePlate;
     private boolean available;
-    private double pricePerHour;
-    @ManyToOne
-    @JoinColumn(name = "rental_id")
-    private Rental rental;
-
+    private double pricePerDay;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private Set<Rental> carRentals = new HashSet<>();
 
 }

@@ -1,22 +1,24 @@
 package mindswap.porto.RentACar.service;
 
-import exceptions.carexceptions.CarAlreadyExists;
-import exceptions.carexceptions.CarNotFoundException;
-import exceptions.carexceptions.LicencePlateException;
-import exceptions.clientexceptions.*;
-import mindswap.porto.RentACar.dto.car.CarCreateDto;
-import mindswap.porto.RentACar.dto.car.CarGetDto;
-import mindswap.porto.RentACar.dto.car.CarUpdateDto;
-import mindswap.porto.RentACar.dto.client.ClientCreateDto;
-import mindswap.porto.RentACar.dto.client.ClientGetDto;
-import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
+import mindswap.porto.RentACar.dto.car.*;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarAlreadyExists;
+import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
+import mindswap.porto.RentACar.exceptions.carexceptions.LicencePlateException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
+import mindswap.porto.RentACar.model.Car;
 
 import java.util.List;
 
 public interface CarServiceI {
-    void add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException;
+    Car add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException;
 
     List<CarGetDto> getAll();
 
-    void put(long id, CarUpdateDto client) throws CarNotFoundException, LicencePlateException;
+    void put(long id, CarUpdateDto client) throws CarNotFoundException, LicencePlateException, ClientNotFoundException;
+
+    Car findByID(long id) throws CarNotFoundException;
+
+    void updateAvailability (Long id, AvailabilityDto availabilityDto) throws CarNotFoundException;
+
+    void updateprice (Long id, UpdatePriceDto updatePriceDto) throws CarNotFoundException;
 }

@@ -1,13 +1,12 @@
 package mindswap.porto.RentACar.controller;
 
+import mindswap.porto.RentACar.dto.car.*;
 import mindswap.porto.RentACar.exceptions.carexceptions.CarAlreadyExists;
 import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
 import mindswap.porto.RentACar.exceptions.carexceptions.LicencePlateException;
 import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
 import jakarta.validation.Valid;
-import mindswap.porto.RentACar.dto.car.CarCreateDto;
-import mindswap.porto.RentACar.dto.car.CarGetDto;
-import mindswap.porto.RentACar.dto.car.CarUpdateDto;
+import mindswap.porto.RentACar.model.Car;
 import mindswap.porto.RentACar.service.CarService;
 import mindswap.porto.RentACar.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,11 @@ public class CarController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> add(@Valid @RequestBody CarCreateDto car, BindingResult bindingResult) {
+    public ResponseEntity<Car> add(@Valid @RequestBody CarCreateDto car, BindingResult bindingResult) throws CarAlreadyExists, LicencePlateException {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        try {
-            carService.add(car);
-        } catch ( CarAlreadyExists | LicencePlateException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(carService.add(car), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -46,12 +40,31 @@ public class CarController {
         return ResponseEntity.ok(carService.getAll());
     }
 
-    @PutMapping(path = "{clientId}")
-public ResponseEntity<Object> Put(@PathVariable("carId") Long id, @RequestBody CarUpdateDto car, BindingResult bindingResult) throws CarNotFoundException, LicenceException {
-    if (bindingResult.hasErrors()) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PutMapping("/{carId}")
+    public ResponseEntity<Object> Put(@PathVariable("carId") Long id, @RequestBody CarUpdateDto car, BindingResult bindingResult) throws CarNotFoundException, LicenceException {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        carService.put(id, car);
+        return new ResponseEntity<>(Messages.CLIENTUPDATED, HttpStatus.OK);
     }
-    carService.put(id, car);
-    return new ResponseEntity<>(Messages.CLIENTUPDATED, HttpStatus.OK);
-}
+
+    @PostMapping("/availability/{carId}")
+    public ResponseEntity<Object> UpdateAvailability(@PathVariable("carId") Long id, @RequestBody AvailabilityDto availabilityDto, BindingResult bindingResult) throws CarNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        carService.updateAvailability(id, availabilityDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/price/{carId}")
+    public ResponseEntity<Object> UpdatePrice(@PathVariable("carId") Long id, @RequestBody UpdatePriceDto updatePriceDto, BindingResult bindingResult) throws CarNotFoundException{
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        carService.updateprice(id, updatePriceDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

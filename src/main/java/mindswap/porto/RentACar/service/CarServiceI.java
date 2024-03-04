@@ -10,7 +10,7 @@ import mindswap.porto.RentACar.model.Car;
 import java.util.List;
 
 public interface CarServiceI {
-    void add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException;
+    Car add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException;
 
     List<CarGetDto> getAll();
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ClientServiceI {
 
-    void add(ClientCreateDto client) throws ClientAlreadyExists, NifException, EmailException, LicenceException;
+    Client add(ClientCreateDto client) throws ClientAlreadyExists, NifException, EmailException, LicenceException;
 
     List<ClientGetDto> getAll();
 

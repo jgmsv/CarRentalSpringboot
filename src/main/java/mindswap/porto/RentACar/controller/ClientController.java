@@ -4,10 +4,8 @@ import jakarta.validation.Valid;
 import mindswap.porto.RentACar.dto.client.ClientCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientGetDto;
 import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
-import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.EmailException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.NifException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.*;
+import mindswap.porto.RentACar.model.Client;
 import mindswap.porto.RentACar.service.ClientService;
 import mindswap.porto.RentACar.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +33,12 @@ public class ClientController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> add(@Valid @RequestBody ClientCreateDto client, BindingResult bindingResult) throws NifException {
+    public ResponseEntity<Client> add(@Valid @RequestBody ClientCreateDto client, BindingResult bindingResult) throws NifException, EmailException, LicenceException, ClientAlreadyExists {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        try {
-            clientService.add(client);
-        } catch (NifException | EmailException | LicenceException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(clientService.add(client), HttpStatus.CREATED);
+
     }
 
 

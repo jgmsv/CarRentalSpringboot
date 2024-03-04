@@ -28,8 +28,8 @@ public class CarService implements CarServiceI{
 
 
     @Override
-    public void add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException {
-        carRepository.save(dtoToCar(car));
+    public Car add(CarCreateDto car) throws CarAlreadyExists, LicencePlateException {
+        return carRepository.save(dtoToCar(car));
     }
 
     @Override
@@ -50,11 +50,15 @@ public class CarService implements CarServiceI{
 
     @Override
     public void updateAvailability(Long id, AvailabilityDto availabilityDto) throws CarNotFoundException {
-
+        Car carToUpdate = carRepository.findById(id).orElseThrow(()-> new CarNotFoundException(String.format(Messages.CARIDDOESNTEXIXTS, id)));
+        carToUpdate.setAvailable(!carToUpdate.isAvailable());
+        carRepository.save(carToUpdate);
     }
 
     @Override
     public void updateprice(Long id, UpdatePriceDto updatePriceDto) throws CarNotFoundException {
-
+        Car carToUpdate = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(String.format(Messages.CARIDDOESNTEXIXTS, id)));
+        carToUpdate.setPricePerDay(updatePriceDto.pricePerDay());
+        carRepository.save(carToUpdate);
     }
 }

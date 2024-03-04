@@ -3,10 +3,7 @@ package mindswap.porto.RentACar.service;
 import mindswap.porto.RentACar.dto.client.ClientCreateDto;
 import mindswap.porto.RentACar.dto.client.ClientGetDto;
 import mindswap.porto.RentACar.dto.client.ClientUpdateDto;
-import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.EmailException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.LicenceException;
-import mindswap.porto.RentACar.exceptions.clientexceptions.NifException;
+import mindswap.porto.RentACar.exceptions.clientexceptions.*;
 import mindswap.porto.RentACar.model.Client;
 import mindswap.porto.RentACar.repository.ClientRepository;
 import mindswap.porto.RentACar.util.Messages;
@@ -16,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static mindswap.porto.RentACar.converter.ClientConverter.ClientToDtoList;
-import static mindswap.porto.RentACar.converter.ClientConverter.dtoToClient;
+import static mindswap.porto.RentACar.converter.ClientConverter.*;
 
 @Service
 public class ClientService implements ClientServiceI {
@@ -29,10 +25,12 @@ public class ClientService implements ClientServiceI {
         this.clientRepository = clientRepository;
     }
 
-    @Override
-    public void add(ClientCreateDto client) throws NifException, EmailException, LicenceException {
 
-        if (clientRepository.findByNif(client.nif()).isPresent()) {
+    @Override
+    public Client add(ClientCreateDto client) throws ClientAlreadyExists, NifException, EmailException, LicenceException {
+        Optional<Client> clientOptional = this.clientRepository.findByNif(client.nif());
+        if (clientOptional.isPresent()){
+
             throw new NifException(Messages.NIFEXISTS);
         }
         if (clientRepository.findByEmail(client.email()).isPresent()) {
@@ -41,28 +39,32 @@ public class ClientService implements ClientServiceI {
         if (clientRepository.findByLicence(client.licence()).isPresent()) {
             throw new LicenceException(Messages.LICENCEEXISTS);
         }
-        clientRepository.save(dtoToClient(client));
-    }
 
+        return clientRepository.save(dtoToClient(client));
+    }
 
     @Override
     public List<ClientGetDto> getAll() {
-        return ClientToDtoList(clientRepository.findAll());
+        return clientToDtoList(clientRepository.findAll());
     }
 
     @Override
     public void put(long id, ClientUpdateDto client) throws EmailException, ClientNotFoundException {
-        Client clientToUpdate = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(String.format(Messages.CLIENTIDDOESNTEXISTS, id)));
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if(!clientOptional.isPresent()){
+            throw new ClientNotFoundException(String.format(Messages.CLIENTIDDOESNTEXISTS, id));
+        }
+        Client clientToUpdate = clientOptional.get();
         if (client.name() != null && !client.name().isEmpty() && !client.name().equals(clientToUpdate.getName())) {
             clientToUpdate.setName(client.name());
         }
         if (client.email() != null && client.email().length() > 0 & !client.email().equals(clientToUpdate.getEmail())) {
-            Optional<Client> userOptionalEmail = clientRepository.findByEmail(client.email());
-            if (clientRepository.findByEmail(client.email()).isPresent()) {
+            Optional<Client> clientOptionalEmail = clientRepository.findByEmail(client.email());
+            if(clientOptionalEmail.isPresent())
                 throw new EmailException(Messages.EMAILEXISTS);
-            }
-            clientRepository.save(clientToUpdate);
+            clientToUpdate.setEmail(client.email());
         }
+        clientRepository.save(clientToUpdate);
     }
 
     @Override

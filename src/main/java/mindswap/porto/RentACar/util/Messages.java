@@ -16,4 +16,5 @@ public class Messages {
     public static final String INVALIDEMAIL = "Invalid email";
     public static final String INVALIDPLATE = "Invalid licence plate";
     public static final String INVALIDAMOUNT = "Invalid amount";
+    public static final  String ANERROROCCURRED = "An error occurred";
 }

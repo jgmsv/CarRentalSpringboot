@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import mindswap.porto.RentACar.dto.rental.RentalCreateDto;
 import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
 import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
+import mindswap.porto.RentACar.model.Rental;
 import mindswap.porto.RentACar.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,7 @@ public class RentalController {
     RentalService rentalService;
 
     @PostMapping("/")
-    public ResponseEntity<String> addRental(@Valid @RequestBody RentalCreateDto rentalDto) throws ClientNotFoundException, CarNotFoundException {
-        rentalService.add(rentalDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Rental> addRental(@Valid @RequestBody RentalCreateDto rentalDto) throws ClientNotFoundException, CarNotFoundException {
+        return new ResponseEntity<>(rentalService.add(rentalDto), HttpStatus.CREATED);
     }
 }

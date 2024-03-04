@@ -4,6 +4,7 @@ import mindswap.porto.RentACar.converter.RentalConverter;
 import mindswap.porto.RentACar.dto.rental.RentalCreateDto;
 import mindswap.porto.RentACar.exceptions.carexceptions.CarNotFoundException;
 import mindswap.porto.RentACar.exceptions.clientexceptions.ClientNotFoundException;
+import mindswap.porto.RentACar.model.Rental;
 import mindswap.porto.RentACar.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class RentalService implements RentalServiceI {
 
 
     @Override
-    public void add(RentalCreateDto rental) throws ClientNotFoundException, CarNotFoundException {
-        rentalRepository.save(RentalConverter.dtoToRental(rental, carService.findByID(rental.car()), clientService.findByid(rental.client())));
+    public Rental add(RentalCreateDto rental) throws ClientNotFoundException, CarNotFoundException {
+        return rentalRepository.save(RentalConverter.dtoToRental(rental, carService.findByID(rental.car()), clientService.findByid(rental.client())));
     }
 }

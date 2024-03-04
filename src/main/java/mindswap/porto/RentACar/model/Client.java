@@ -11,10 +11,11 @@ import java.util.Set;
 
 
 @Data
+@Getter
+@Setter
 @Entity
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Table
 public class Client {
 
@@ -28,9 +29,25 @@ public class Client {
     private Integer nif;
     private LocalDate birthDate;
     private String licence;
-    private String password;
     private String email;
     @Transient
     private Integer age;
+
+
+    public Client(String name, Integer nif, LocalDate birthDate, String licence, String email) {
+        this.name = name;
+        this.nif = nif;
+        this.birthDate = birthDate;
+        this.licence = licence;
+        this.email = email;
+
+    }
+
+    public Client() {
+    }
+
+    public Integer getAge() {
+        return LocalDate.now().getYear() - birthDate.getYear();
+    }
 
 }

@@ -17,7 +17,6 @@ public class ClientConverter {
                 .birthDate(client.birthDate())
                 .licence(client.licence())
                 .email(client.email())
-                .password(client.password())
                 .build();
     }
 
@@ -29,7 +28,7 @@ public class ClientConverter {
         );
     }
 
-    public static List<ClientGetDto> ClientToDtoList(List<Client> clients) {
+    public static List<ClientGetDto> clientToDtoList(List<Client> clients) {
         return clients.stream()
                 .map(ClientConverter::clientToDto)
                 .toList();
